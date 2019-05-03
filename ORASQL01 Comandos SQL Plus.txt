@@ -1,0 +1,93 @@
+# Comandos SQL Plus y errores en Oracle 12g
+
+## SQL Plus
+
+
+## Errores
+
+### 1. Listener refused the connection with the following error:
+		ORA-12505, TNS:listener does not currently know of SID given in connect descriptor
+		
+		
+	1.1. Origen
+
+		 Al ejecutar un programa en Spring para la conexión a la base de datos con el usuario DIP, muestra el mensaje previo.
+	
+	1.2. Solución : La conexión por SID y no por servicio
+		
+	     Adecuar el nombre de la base de datos, por lo general es ORCL por defecto
+		
+		 Antes:
+		     <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+		
+		 Despues:
+		     <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"></property>
+			
+	1.3. Solución : Servicio OracleServiceORCL y OracleOraDB12Home1TNSListener
+		
+		 a. Ingresar al windows + R
+		 b. Digitar : services.msc
+		 c. Buscar el servicio OracleServiceORCL
+		 d. Iniciar o Reiniciar el servicio
+		 e. Verificar conexión
+	
+	1.4. Solución : Listenner no se encuentre con status Sleep
+	
+		 a. Abra la consola CMD como administrador
+		 b. Teclee :  lsnrctl status
+		 c. Visualiza el resultado del status
+		 :::
+			 LSNRCTL for 64-bit Windows: Version 12.2.0.1.0 - Production on 10-ENE-2019 14:30:51
+             
+			 Copyright (c) 1991, 2016, Oracle.  All rights reserved.
+			 
+			 Conectßndose a (DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521)))
+			 ESTADO del LISTENER
+			 ------------------------
+			 Alias                     LISTENER
+			 Versi¾n                   TNSLSNR for 64-bit Windows: Version 12.2.0.1.0 - Production
+			 Fecha de Inicio       09-ENE-2019 15:42:32
+			 Tiempo Actividad   0 dÝas 22 hr. 48 min. 21 seg.
+			 Nivel de Rastreo        off
+			 Seguridad               ON: Local OS Authentication
+			 SNMP                      OFF
+			 Parßmetros del Listener   C:\BaseDatos\Oracle\virtual\product\12.2.0\dbhome_1\network\admin\listener.ora
+			 Log del Listener          C:\BaseDatos\Oracle\virtual\diag\tnslsnr\ETG-DEV\listener\alert\log.xml
+			 Recibiendo Resumen de Puntos Finales...
+			 (DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=ETG-DEV)(PORT=1521)))
+			 (DESCRIPTION=(ADDRESS=(PROTOCOL=ipc)(PIPENAME=\\.\pipe\EXTPROC1521ipc)))
+			 (DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=127.0.0.1)(PORT=1521)))
+			 (DESCRIPTION=(ADDRESS=(PROTOCOL=tcps)(HOST=ETG-DEV)(PORT=5500))(Security=(my_wallet_directory=C:\BASEDATOS\ORACLE\VIRTUAL\admin\orcl\xdb_wallet))(Presentation=HTTP)(Session=RAW))
+			 Resumen de Servicios...
+			 El servicio "CLRExtProc" tiene 1 instancia(s).
+			 La instancia "CLRExtProc", con estado UNKNOWN, tiene 1 manejador(es) para este servicio...
+			 El servicio "c7a8b66c579e4635afba40a40b2c76f1" tiene 1 instancia(s).
+			 La instancia "orcl", con estado READY, tiene 1 manejador(es) para este servicio...
+			 El servicio "orcl" tiene 1 instancia(s).
+			 La instancia "orcl", con estado READY, tiene 1 manejador(es) para este servicio...
+			 El servicio "orclXDB" tiene 1 instancia(s).
+			 La instancia "orcl", con estado READY, tiene 1 manejador(es) para este servicio...
+			 El servicio "orclpdb" tiene 1 instancia(s).
+			 La instancia "orcl", con estado READY, tiene 1 manejador(es) para este servicio...
+			 El comando ha terminado correctamente
+					
+		 :::
+	
+		 d. Teclee :  tnsping orcl
+		 c. Visualiza el resultado del ping
+		 :::
+			 TNS Ping Utility for 64-bit Windows: Version 12.2.0.1.0 - Production on 10-ENE-2019 14:40:32
+			 
+			 Copyright (c) 1997, 2016, Oracle.  All rights reserved.
+			 
+			 Archivos de parßmetros utilizados:
+			 C:\BaseDatos\Oracle\virtual\product\12.2.0\dbhome_1\network\admin\sqlnet.ora
+			 
+			 
+			 Adaptador TNSNAMES utilizado para resolver el alias
+			 Intentando contactar con (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = orcl)))
+			 Realizado correctamente (0 mseg)
+		 :::
+	
+	
+	
