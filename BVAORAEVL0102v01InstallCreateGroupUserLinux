@@ -4,6 +4,10 @@
 
 ## Procedimiento
 
+### Clone
+
+p028036@OPME:~$ git clone https://github.com/EvaluacionTI/Oracle12g.git 14Oracle
+
 ### Version de ubuntu
 
 p028036@GoSwift:~$lsb_release -a
