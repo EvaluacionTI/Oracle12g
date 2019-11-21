@@ -1,0 +1,62 @@
+# Instalación de Oracle
+
+##1. Configuration files for setting system variables
+
+##2. Repository
+
+p028036@OPME:~$ git clone https://github.com/EvaluacionTI/Oracle12g.git 14Oracle
+
+##3. Version de ubuntu
+
+p028036@OPME:~$lsb_release -a
+
+##4. Editing y configuration files for setting variables system
+
+## Oracle 12c entries
+## fs.aio-max-nr=1048576
+## fs.file-max=6815744
+## kernel.shmall=2097152
+## kernel.shmmni=4096
+## kernel.sem=250 32000 100 128
+## net.ipv4.ip_local_port_range=9000 65500
+## net.core.rmem_default=262144
+## net.core.rmem_max=4194304
+## net.core.wmem_default=262144
+## net.core.wmem_max=1048586
+## kernel.shmmax=1073741824
+
+
+root@OPME:~# vim /etc/sysctl.conf
+
+##4. Ejecute el siguient commando en root
+
+
+Cargue nuevos parámetros del kernel, ejecutando following como usuario root
+
+root@OPME:~# sysctl -p
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

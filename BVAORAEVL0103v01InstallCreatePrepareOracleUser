@@ -1,0 +1,46 @@
+# Instalación de Oracle
+
+##1. Create and prepare location to install the oracle binaries
+
+##2. Repository
+
+p028036@OPME:~$ git clone https://github.com/EvaluacionTI/Oracle12g.git 14Oracle
+
+##3. Version de ubuntu
+
+p028036@OPME:~$lsb_release -a
+
+##4. Create and prepare Oracle user
+
+
+##5. Create and prepare location to install the oracle binaries
+
+root@OPME:~# mkdir -p /oracle
+
+root@OPME:~# chown -R oracle:dba /oracle
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
