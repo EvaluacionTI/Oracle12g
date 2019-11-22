@@ -2,6 +2,8 @@
 
 ##1. Create and prepare location to install the oracle binaries
 
+##    https://soajp.blogspot.com/2016/06/instalar-base-de-datos-oracle-12c-en.html
+
 ##2. Repository
 
 p028036@OPME:~$ git clone https://github.com/EvaluacionTI/Oracle12g.git 14Oracle
@@ -10,7 +12,35 @@ p028036@OPME:~$ git clone https://github.com/EvaluacionTI/Oracle12g.git 14Oracle
 
 p028036@OPME:~$lsb_release -a
 
-##4. Create and prepare Oracle user
+##4. Establecer permisos al directorio de la Base de Datos, para ello ejecutar el siguiente comando en una terminal:
+
+root@OPME:~# chown -R oracle:oinstall /tmp/database
+
+##5. Crear enlaces simbólicos a binarios y librerias
+
+###5.1. Linkeando binarios
+
+ln -s /usr/bin/awk /bin/awk
+ln -s /usr/bin/rpm /bin/rpm
+ln -s /usr/bin/basename /bin/basename
+
+###5.2. Linkeando librerias
+
+ln -s /usr/lib/x86_64-linux-gnu /usr/lib64
+
+cd /lib64
+
+ln -s /lib/x86_64-linux-gnu/libgcc_s.so.1 .
+
+###6. Crear directorios de destino
+
+mkdir -p /u01/app/oracle/product/12/dbhome_1
+
+chown -R oracle:oinstall /u01
+
+chmod -R 775 /u01
+
+
 
 
 ##5. Create and prepare location to install the oracle binaries

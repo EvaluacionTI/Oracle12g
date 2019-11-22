@@ -11,7 +11,10 @@ p028036@OPME:~$ git clone https://github.com/EvaluacionTI/Oracle12g.git 14Oracle
 p028036@OPME:~$lsb_release -a
 
 ##4. Editing y configuration files for setting variables system
-
+     Preparar parametros de configuración: Se configuran los parámetros del kernel y los parametros de los usuarios
+	 
+	 
+###4.1 Parametros del kernel: editar el archiv /etc/sysctl.conf y agregar las siguientes líneas
 ## Oracle 12c entries
 ## fs.aio-max-nr=1048576
 ## fs.file-max=6815744
@@ -28,7 +31,24 @@ p028036@OPME:~$lsb_release -a
 
 root@OPME:~# vim /etc/sysctl.conf
 
-##4. Ejecute el siguient commando en root
+	:::
+		#### Oracle 12c Kernel Parameters ####
+		fs.suid_dumpable = 1
+		fs.aio-max-nr = 1048576
+		fs.file-max = 6815744
+		kernel.shmall = 2097152
+		kernel.shmmax = 536870912
+		kernel.shmmni = 4096
+		# semaphores: semmsl, semmns, semopm, semmni
+		kernel.sem = 250 32000 100 128
+		net.ipv4.ip_local_port_range = 9000 65500
+		net.core.rmem_default=4194304
+		net.core.rmem_max=4194304
+		net.core.wmem_default=262144
+		net.core.wmem_max=1048586
+	:::
+
+##4.2 Ejecute el siguient commando en root
 
 
 Cargue nuevos parámetros del kernel, ejecutando following como usuario root
@@ -36,6 +56,53 @@ Cargue nuevos parámetros del kernel, ejecutando following como usuario root
 root@OPME:~# sysctl -p
 
 
+###4.3 Parametros de los usuarios /etc/security/limits.conf y agregar las lineas
+
+	:::
+		#### oracle User Settings 4 Oracle 12c ####
+		oracle       soft  nproc  2047
+		oracle       hard  nproc  16384
+		oracle       soft  nofile 1024
+		oracle       hard  nofile 65536
+		oracle       soft  stack  10240
+	:::
+
+##4.4 Ejecute el siguient commando en root
+
+
+Cargue nuevos parámetros del kernel, ejecutando following como usuario root
+
+root@OPME:~# /sbin/sysctl -p
+
+##5. Añadir path al archivo (.bashrc) suario oracle. Para ello se logea con el usuario oracle y se edita el archivo:
+su oracle
+nano ~/.bashrc
+
+Agregar las siguients lineas al final del archivo. Reemplazar [HOSTNAME] por la IP local previamente obtenida
+
+	:::
+		# Oracle Settings
+		TMP=/tmp; 
+		export TMP TMPDIR=$TMP; 
+		export TMPDIR ORACLE_HOSTNAME=[HOSTNAME]; 
+		export ORACLE_HOSTNAME
+		ORACLE_UNQNAME=DB12C; 
+		export ORACLE_UNQNAME
+		ORACLE_BASE=/u01/app/oracle; 
+		export ORACLE_BASE
+		ORACLE_HOME=$ORACLE_BASE/product/12/dbhome_1; 
+		export ORACLE_HOME
+		ORACLE_SID=SID; 
+		export ORACLE_SID
+		PATH=/usr/sbin:$PATH; 
+		export PATH
+		PATH=$ORACLE_HOME/bin:$PATH; 
+		export PATH
+		LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib:/usr/lib64; 
+		export LD_LIBRARY_PATH
+		CLASSPATH=$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib; 
+		export CLASSPATH
+	:::
 
 
 
@@ -43,12 +110,15 @@ root@OPME:~# sysctl -p
 
 
 
+##6. Ejecute el siguient comando
 
+root@OPME:~# ~/.bashrc
 
+##7. Ejecutar el instalador
 
+chmod -R +x /tmp/database
 
-
-
+/tmp/database/runInstaller
 
 
 

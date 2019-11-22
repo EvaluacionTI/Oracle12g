@@ -24,12 +24,34 @@ Añadiendo el grupo `dba' (GID 1002) ...
 Hecho.
 root@OPME:~#
 
+
+root@OPME:~# sudo groupadd -g 504 oper
+root@OPME:~#
+
+
+root@OPME:~# sudo groupadd -g 505 asmadmin
+root@OPME:~#
+
 ###4.2 Usuario
 
 root@OPME:~# useradd -g oinstall -G dba -p password -d /home/oracle -s /bin/bash oracle
+root@OPME:~# useradd -g oinstall -G dba, oinstall -s /bin/bash -m -d /home/oracle oracle
+
+ ó
+ 
+root@OPME:~#sudo useradd -u 1001 -g oinstall -G dba,asmadmin,oper -s /bin/bash -m oracle
+
+
+###4.3 Asignando password
+
+root@OPME:~# sudo passwd oracle
+Introduzca la nueva contraseña de UNIX: oracle1908
+Vuelva a escribir la nueva contraseña de UNIX: oracle1908
+passwd: contraseña actualizada correctamente
 root@OPME:~#
 
-###4.3 Create folder
+
+###4.4 Create folder
 
 root@OPME:~# mkdir /home/oracle
 root@OPME:~# ls -l
@@ -40,10 +62,6 @@ root@OPME:~# cd /home/oracle
 root@OPME:/home/oracle#
 
 
-### 4.4 Change propietario group and file
-
-root@OPME:~#chown -R oracle:dba /home/oracle
-root@OPME:~#
 
 
 
