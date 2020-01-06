@@ -2,7 +2,8 @@
 
 ##1. Create and prepare location to install the oracle binaries
 
-##    https://soajp.blogspot.com/2016/06/instalar-base-de-datos-oracle-12c-en.html
+##  Reference  https://soajp.blogspot.com/2016/06/instalar-base-de-datos-oracle-12c-en.html
+			   https://tutorialforlinux.com/2019/09/17/how-to-install-oracle-12c-r2-database-on-ubuntu-18-04-bionic-64-bit-easy-guide/4/
 
 ##2. Repository
 
@@ -12,65 +13,28 @@ p028036@OPME:~$ git clone https://github.com/EvaluacionTI/Oracle12g.git 14Oracle
 
 p028036@OPME:~$lsb_release -a
 
-##4. Establecer permisos al directorio de la Base de Datos, para ello ejecutar el siguiente comando en una terminal:
+
+###6. Crear directorios de destino: Make target directories
+### Necesitamos crear una carpeta donde se instalará el software de Oracle. 
+### en teoría es aconsejable que pertenezca a al usuario oracle con grupo oinstall. Y los permisos a 775.
+
+root@OPME:~# sudo mkdir -p /u01/app/oracle/product/12/dbhome_1
+
+Esta información debemos guardarla ya que cuando el programa de instalación nos pida una carpeta donde instalar, 
+debemos darle este nombre. 
+También se debe verificar que la variable de entorno $ORACLE_PATH que crearemos mas adelante, apunte también a esta ruta.
+
+
+### Again setup ownership
+root@OPME:~# sudo chown -R oracle:oinstall /u01
+
+### And permissions over it
+root@OPME:~# sudo chmod -R 775 /u01
+
+##7. Establecer permisos al directorio de la Base de Datos, para ello ejecutar el siguiente comando en una terminal:
+##   Finally, set also the temporary DB ownership
 
 root@OPME:~# chown -R oracle:oinstall /tmp/database
-
-##5. Crear enlaces simbólicos a binarios y librerias
-
-###5.1. Linkeando binarios
-
-ln -s /usr/bin/awk /bin/awk
-ln -s /usr/bin/rpm /bin/rpm
-ln -s /usr/bin/basename /bin/basename
-
-###5.2. Linkeando librerias
-
-ln -s /usr/lib/x86_64-linux-gnu /usr/lib64
-
-cd /lib64
-
-ln -s /lib/x86_64-linux-gnu/libgcc_s.so.1 .
-
-###6. Crear directorios de destino
-
-mkdir -p /u01/app/oracle/product/12/dbhome_1
-
-chown -R oracle:oinstall /u01
-
-chmod -R 775 /u01
-
-
-
-
-##5. Create and prepare location to install the oracle binaries
-
-root@OPME:~# mkdir -p /oracle
-
-root@OPME:~# chown -R oracle:dba /oracle
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

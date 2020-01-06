@@ -46,6 +46,10 @@ root@OPME:~# vim /etc/sysctl.conf
 		net.core.rmem_max=4194304
 		net.core.wmem_default=262144
 		net.core.wmem_max=1048586
+		
+		#net.bridge.bridge-nf-call-ip6tables = 0
+		#net.bridge.bridge-nf-call-iptables = 0
+		#net.bridge.bridge-nf-call-arptables = 0
 	:::
 
 ##4.2 Ejecute el siguient commando en root
@@ -60,11 +64,18 @@ root@OPME:~# sysctl -p
 
 	:::
 		#### oracle User Settings 4 Oracle 12c ####
+		#### nproc ####
 		oracle       soft  nproc  2047
 		oracle       hard  nproc  16384
+		#### nofile ####
 		oracle       soft  nofile 1024
 		oracle       hard  nofile 65536
+		#### stack ####
 		oracle       soft  stack  10240
+		oracle       hard  stack  32768
+		#### memlock ####
+		oracle       soft  memlock  134217728
+		oracle       hard  memlock  134217728
 	:::
 
 ##4.4 Ejecute el siguient commando en root

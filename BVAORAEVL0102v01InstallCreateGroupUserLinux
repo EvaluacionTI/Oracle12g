@@ -51,19 +51,19 @@ passwd: contraseña actualizada correctamente
 root@OPME:~#
 
 
-###4.4 Create folder
+#5. Otra manera de efectuar el usuario
 
-root@OPME:~# mkdir /home/oracle
-root@OPME:~# ls -l
-total 0
-root@OPME:~# pwd
-/root
-root@OPME:~# cd /home/oracle
-root@OPME:/home/oracle#
+#5.1. Crear usuario. Nos pide darle una contraseña
+root@OPME:~#sudo adduser oracle 
 
+#5.2. Asisgnar grupo principal oinstall
+root@OPME:~#sudo usermod -g oinstall oracle
 
+#5.3. Añadir otros grupos a oracle
+root@OPME:~#sudo usermod -a -G dba,oper,asmadmin oracle
 
-
+#5.4. Le permitimos poder hacer sudo. Para ello le asignamos el grupo sudo
+root@OPME:~#sudo usermod -a -G sudo oracle
 
 
 

@@ -1,0 +1,29 @@
+# Instalación de Oracle
+
+	Make network setup
+	
+##1. Reference
+
+##  Reference  https://soajp.blogspot.com/2016/06/instalar-base-de-datos-oracle-12c-en.html
+			   https://tutorialforlinux.com/2019/09/17/how-to-install-oracle-12c-r2-database-on-ubuntu-18-04-bionic-64-bit-easy-guide/4/
+
+##2. Make network configuration
+
+p028036@OPME:~$ hostname
+
+##3. Version de ubuntu
+
+p028036@OPME:~$lsb_release -a
+
+
+###6. Crear directorios de destino: Make target directories
+
+root@OPME:~# vim /etc/hosts
+
+ añadimos 2 líneas de nombre del equipo
+ 
+127.0.0.1 localhost
+127.0.1.1 nombre_equipo
+
+
+
