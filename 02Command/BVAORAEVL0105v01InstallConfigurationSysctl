@@ -13,7 +13,10 @@ p028036@OPME:~$lsb_release -a
 ##4. Editing y configuration files for setting variables system
      Preparar parametros de configuración: Se configuran los parámetros del kernel y los parametros de los usuarios
 	 
-	 
+
+Ingresar con el usuario oracle o sino con root
+
+
 ###4.1 Parametros del kernel: editar el archiv /etc/sysctl.conf y agregar las siguientes líneas
 ## Oracle 12c entries
 ## fs.aio-max-nr=1048576
@@ -30,6 +33,10 @@ p028036@OPME:~$lsb_release -a
 
 
 root@OPME:~# vim /etc/sysctl.conf
+
+The Values of ‘shmall’ and ‘shmmax’ Need to be Customized following your System Memory Size.
+Here above is a Valid Setup for a 8Gb RAM Size!
+If you need to Change first Check your Phisical Memory Size with:
 
 	:::
 		#### Oracle 12c Kernel Parameters ####
@@ -52,7 +59,26 @@ root@OPME:~# vim /etc/sysctl.conf
 		#net.bridge.bridge-nf-call-arptables = 0
 	:::
 
-##4.2 Ejecute el siguient commando en root
+
+	Mostrar la memoria
+	root@OPME:~# cat /proc/meminfo | grep MemTotal
+	
+	:::
+		MemTotal</b></font>:        4037292 kB
+	:::
+	
+	Then ‘shmall’ should be Set as:
+	
+	
+	[RamKb] / 10 == 403729.2
+	
+	And instead ‘shmmax’ as:
+	[RamKb] * 1024 / 2 = 4037292 * 1024 /2  = 2,067,093,504
+	
+	
+
+
+##4.2 Ejecute el siguient commando en root u oracle
 
 
 Cargue nuevos parámetros del kernel, ejecutando following como usuario root
@@ -83,54 +109,20 @@ root@OPME:~# sysctl -p
 
 Cargue nuevos parámetros del kernel, ejecutando following como usuario root
 
-root@OPME:~# /sbin/sysctl -p
-
-##5. Añadir path al archivo (.bashrc) suario oracle. Para ello se logea con el usuario oracle y se edita el archivo:
-su oracle
-nano ~/.bashrc
-
-Agregar las siguients lineas al final del archivo. Reemplazar [HOSTNAME] por la IP local previamente obtenida
-
+root@OPME:/home/oracle# /sbin/sysctl -p
 	:::
-		# Oracle Settings
-		TMP=/tmp; 
-		export TMP TMPDIR=$TMP; 
-		export TMPDIR ORACLE_HOSTNAME=[HOSTNAME]; 
-		export ORACLE_HOSTNAME
-		ORACLE_UNQNAME=DB12C; 
-		export ORACLE_UNQNAME
-		ORACLE_BASE=/u01/app/oracle; 
-		export ORACLE_BASE
-		ORACLE_HOME=$ORACLE_BASE/product/12/dbhome_1; 
-		export ORACLE_HOME
-		ORACLE_SID=SID; 
-		export ORACLE_SID
-		PATH=/usr/sbin:$PATH; 
-		export PATH
-		PATH=$ORACLE_HOME/bin:$PATH; 
-		export PATH
-		LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib:/usr/lib64; 
-		export LD_LIBRARY_PATH
-		CLASSPATH=$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib; 
-		export CLASSPATH
+		fs.aio-max-nr = 1048576
+		fs.file-max = 6815744
+		kernel.shmall = 2097152
+		kernel.shmmni = 4096
+		kernel.sem = 250 32000 100 128
+		net.ipv4.ip_local_port_range = 9000 65500
+		net.core.rmem_default = 262144
+		net.core.rmem_max = 4194304
+		net.core.wmem_default = 262144
+		net.core.wmem_max = 1048586
+		kernel.shmmax = 1073741824
 	:::
-
-
-
-
-
-
-
-##6. Ejecute el siguient comando
-
-root@OPME:~# ~/.bashrc
-
-##7. Ejecutar el instalador
-
-chmod -R +x /tmp/database
-
-/tmp/database/runInstaller
-
 
 
 

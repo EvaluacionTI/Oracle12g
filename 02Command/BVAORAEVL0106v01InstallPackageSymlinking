@@ -1,0 +1,177 @@
+# Instalación de Oracle
+
+##1. Configuration files for setting system variables
+
+##2. Repository
+
+p028036@OPME:~$ git clone https://github.com/EvaluacionTI/Oracle12g.git 14Oracle
+
+##A. Paquetes
+
+p028036@OPME:~$lsb_release -a
+
+
+##3.1 Eliminar las espeficicaionaes
+
+	root@OPME:/home/oracle# sudo apt remove /etc/apt/sources.list.d/extra.list
+	:::
+		E: Entrada 1 mal especificada en list fichero /etc/apt/sources.list.d/extra.list ([option] not assignment)
+		E: No se pudieron leer las listas de fuentes.
+		E: Se ha suministrado el fichero no admitido /etc/apt/sources.list.d/extra.list en la línea de órdenes
+		E: Entrada 1 mal especificada en list fichero /etc/apt/sources.list.d/extra.list ([option] not assignment)
+		E: No se pudieron leer las listas de fuentes.
+	:::
+
+##3.2 Eliminando
+	:::
+	root@OPME:/home/oracle# sudo rm /etc/apt/sources.list.d/* -vf
+	'/etc/apt/sources.list.d/elastic-7.x.list' borrado
+	'/etc/apt/sources.list.d/extra.list' borrado
+	'/etc/apt/sources.list.d/mongodb-enterprise.list' borrado
+	'/etc/apt/sources.list.d/mongodb-enterprise.list.save' borrado
+	'/etc/apt/sources.list.d/pgdg.list' borrado
+	'/etc/apt/sources.list.d/pgdg.list.save' borrado
+	:::
+	root@OPME:/home/oracle#
+
+
+
+##4. Instalación de paquetes
+
+	root@OPME:/home/oracle# sudo apt-get update
+	
+	:::
+		Obj:1 http://pe.archive.ubuntu.com/ubuntu bionic InRelease
+		Leyendo lista de paquetes... Hecho 
+	:::
+
+##5. Descargando paquetes 
+	root@OPME:/home/oracle# sudo apt-get install unixodbc unixodbc-dev unzip lsb-cxx pdksh sysstat gcc g++-multilib lib32ncurses5 lib32z1 ksh lesstif2 zlibc rpm libc6 libc6-dev libc6-dev-i386 libc6-i386 gcc-multilib less lib32z1 libelf-dev binutils libodbcinstq4-1 libpth-dev zenity libpthread-stubs0 libstdc++5 autotools-dev bzip2 elfutils g++ rlwrap libltdl-dev libxm4:i386 libuil4:i386 libmrm4:i386 libxm4 libuil4 libmrm4 libmotif-common libpthread-stubs0-dev build-essential expat gawk alien autoconf automake lesstif2-dev
+	:::
+		Leyendo lista de paquetes... Hecho
+	Creando árbol de dependencias       
+	Leyendo la información de estado... Hecho
+	El paquete pdksh no está disponible, pero algún otro paquete hace referencia
+	a él. Esto puede significar que el paquete falta, está obsoleto o sólo se
+	encuentra disponible desde alguna otra fuente
+	
+	El paquete lesstif2-dev no está disponible, pero algún otro paquete hace referencia
+	a él. Esto puede significar que el paquete falta, está obsoleto o sólo se
+	encuentra disponible desde alguna otra fuente
+	
+	E: No se ha podido localizar el paquete lsb-cxx
+	E: El paquete «pdksh» no tiene un candidato para la instalación
+	E: No se ha podido localizar el paquete lesstif2
+	E: No se ha podido localizar el paquete libpthread-stubs0
+	E: El paquete «lesstif2-dev» no tiene un candidato para la instalación
+
+	:::
+
+##6. Again to Install Old Libraries.
+Firs Enable Precise Repository with
+
+root@OPME:/home/oracle# sudo su -c "echo 'deb [trusted=yes] http://cz.archive.ubuntu.com/ubuntu precise main universe' > /etc/apt/sources.list.d/extra.list"
+
+root@OPME:/home/oracle# sudo apt-get update
+	:::
+		Obj:1 http://pe.archive.ubuntu.com/ubuntu bionic InRelease
+		Ign:2 http://cz.archive.ubuntu.com/ubuntu precise InRelease
+		Des:3 http://cz.archive.ubuntu.com/ubuntu precise Release [49,6 kB]
+		Des:4 http://cz.archive.ubuntu.com/ubuntu precise Release.gpg [198 B]
+		Ign:4 http://cz.archive.ubuntu.com/ubuntu precise Release.gpg
+		Des:5 http://cz.archive.ubuntu.com/ubuntu precise/main amd64 Packages [1.273 kB]
+		Des:6 http://cz.archive.ubuntu.com/ubuntu precise/main i386 Packages [1.274 kB]
+		Des:7 http://cz.archive.ubuntu.com/ubuntu precise/universe i386 Packages [4.796 kB]
+		Des:8 http://cz.archive.ubuntu.com/ubuntu precise/universe amd64 Packages [4.786 kB]
+		Descargados 12,2 MB en 28s (443 kB/s)                                 
+		Leyendo lista de paquetes... Hecho
+		W: Error de GPG: http://cz.archive.ubuntu.com/ubuntu precise Release: Las firmas siguientes no se pudieron verificar porque su clave pública no está disponible: NO_PUBKEY 40976EAF437D05B5
+	:::
+
+##7. And the Install the Remaining stuff:
+
+root@OPME:/home/oracle# sudo apt install lesstif2 lesstif2-dev pdksh libaio-dev libpthread-stubs0 lsb-cxx
+
+	:::
+		Leyendo lista de paquetes... Hecho
+		Creando árbol de dependencias       
+		Leyendo la información de estado... Hecho
+		libaio-dev ya está en su versión más reciente (0.3.110-5ubuntu0.1).
+		No se pudieron instalar algunos paquetes. Esto puede significar que
+		usted pidió una situación imposible o, si está usando la distribución
+		inestable, que algunos paquetes necesarios aún no se han creado o se
+		han sacado de «Incoming».
+		La siguiente información puede ayudar a resolver la situación:
+		
+		Los siguientes paquetes tienen dependencias incumplidas:
+		lesstif2-dev : Depende: libxft-dev pero no va a instalarse
+						Depende: libfontconfig1-dev pero no va a instalarse
+		E: No se pudieron corregir los problemas, usted ha retenido paquetes rotos.
+	:::
+
+
+##8. After to Restore the Repositories
+
+root@OPME:/home/oracle# sudo apt remove /etc/apt/sources.list.d/extra.list
+
+	:::
+		Leyendo lista de paquetes... Hecho
+		E: Se ha suministrado el fichero no admitido /etc/apt/sources.list.d/extra.list en la línea de órdenes
+	:::
+
+root@OPME:/home/oracle# sudo apt update
+
+	:::
+		Ign:1 http://cz.archive.ubuntu.com/ubuntu precise InRelease           
+		Obj:2 http://cz.archive.ubuntu.com/ubuntu precise Release             
+		Obj:3 http://pe.archive.ubuntu.com/ubuntu bionic InRelease
+		Des:4 http://cz.archive.ubuntu.com/ubuntu precise Release.gpg [198 B]
+		Ign:4 http://cz.archive.ubuntu.com/ubuntu precise Release.gpg
+		Descargados 198 B en 1s (195 B/s)
+		Leyendo lista de paquetes... Hecho
+		Creando árbol de dependencias       
+		Leyendo la información de estado... Hecho
+		Todos los paquetes están actualizados.
+		W: Error de GPG: http://cz.archive.ubuntu.com/ubuntu precise Release: Las firmas siguientes no se pudieron verificar porque su clave pública no está disponible: NO_PUBKEY 40976EAF437D05B5
+	:::
+
+##9. Set to Hold the Installed Libraries without Upgrading:
+
+root@OPME:/home/oracle# sudo apt-mark hold libaio-dev lesstif2 lesstif2-dev pdksh libpthread-stubs0 lsb-cxx
+
+	:::
+		libaio-dev fijado como retenido.
+		lesstif2 fijado como retenido.
+		lesstif2-dev fijado como retenido.
+		pdksh fijado como retenido.
+		libpthread-stubs0 fijado como retenido.
+		lsb-cxx fijado como retenido.
+	:::
+
+##10. Finally, Make a needed Symlink:
+
+	root@OPME:/home/oracle# sudo ln -s /lib/x86_64-linux-gnu/libgcc_s.so.1 /lib64/libgcc_s.so.1
+
+
+
+##B. Hacer enlaces simbolicos
+
+##1. Make Symlinks to Binaries and Libraries
+Linking Binaries with
+
+sudo ln -s /usr/bin/awk /bin/awk
+sudo ln -s /usr/bin/rpm /bin/rpm
+sudo ln -s /usr/bin/basename /bin/basename
+
+##2. And Link Libraries as:
+
+sudo ln -s /usr/lib/x86_64-linux-gnu /usr/lib64
+sudo ln -s /lib/libgcc_s.so.1 /lib/libgcc_s.so
+sudo ln -s /lib/x86_64-linux-gnu/libgcc_s.so.1 /lib64/libgcc_s.so.1
+sudo ln -sf /bin/bash /bin/sh
+
+
+
+
+
+
