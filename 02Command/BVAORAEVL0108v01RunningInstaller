@@ -1,0 +1,25 @@
+# Instalación de Oracle
+
+##1. Configuration files for setting system variables
+
+### https://tutorialforlinux.com/2019/09/17/how-to-install-oracle-12c-r2-database-on-ubuntu-18-04-bionic-64-bit-easy-guide/8/
+### https://medium.com/venturenxt/install-oracle-database-12c-on-ubuntu-16-04-c081d51c0f9d
+### http://informaticadantesca.blogspot.com/2018/02/oracle-12.html
+
+##2. Repository
+
+p028036@OPME:~$ git clone https://github.com/EvaluacionTI/Oracle12g.git 14Oracle
+
+##A. Setting Path
+
+###1. So now Run the Installation Script
+First give Execution permissions:
+
+
+chmod -R +x /tmp/database
+
+###2. And then to Launch the Wizard:
+
+
+/tmp/database/runInstaller
+

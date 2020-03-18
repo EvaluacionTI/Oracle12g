@@ -1,0 +1,59 @@
+# Instalación de Oracle
+
+##1. Configuration files for setting system variables
+
+##2. Repository
+
+p028036@OPME:~$ git clone https://github.com/EvaluacionTI/Oracle12g.git 14Oracle
+
+##A. Paquetes
+
+
+##5. Añadir path al archivo (.bashrc) suario oracle. Para ello se logea con el usuario oracle y se edita el archivo:
+su oracle
+nano ~/.bashrc
+
+Agregar las siguients lineas al final del archivo. Reemplazar [HOSTNAME] por la IP local previamente obtenida
+
+	:::
+		# Oracle Settings
+		TMP=/tmp; 
+		export TMP TMPDIR=$TMP; 
+		export TMPDIR ORACLE_HOSTNAME=[HOSTNAME]; 
+		export ORACLE_HOSTNAME
+		ORACLE_UNQNAME=DB12C; 
+		export ORACLE_UNQNAME
+		ORACLE_BASE=/u01/app/oracle; 
+		export ORACLE_BASE
+		ORACLE_HOME=$ORACLE_BASE/product/12/dbhome_1; 
+		export ORACLE_HOME
+		ORACLE_SID=SID; 
+		export ORACLE_SID
+		PATH=/usr/sbin:$PATH; 
+		export PATH
+		PATH=$ORACLE_HOME/bin:$PATH; 
+		export PATH
+		LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib:/usr/lib64; 
+		export LD_LIBRARY_PATH
+		CLASSPATH=$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib; 
+		export CLASSPATH
+	:::
+
+
+
+
+
+
+
+##6. Ejecute el siguient comando
+
+root@OPME:~# ~/.bashrc
+
+##7. Ejecutar el instalador
+
+chmod -R +x /tmp/database
+
+/tmp/database/runInstaller
+
+
+
